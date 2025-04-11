@@ -1,0 +1,883 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Anxt Ai - Ultimate Pro</title>
+
+  <!-- Optimized Font Loading -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;700&family=Orbitron:wght@700&family=Rajdhani:wght@600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+  <!-- Inline Critical CSS -->
+  <style>
+    :root {
+      --primary: #6e45e2;
+      --secondary: #88d3ce;
+      --accent: #ff7e5f;
+      --dark: #0f0f1a;
+      --darker: #080811;
+      --neon: #0ff0fc;
+      --win: #4CAF50;
+      --loss: #F44336;
+    }
+    
+    body {
+      font-family: 'El Messiri', sans-serif;
+      background: linear-gradient(135deg, var(--darker), var(--dark));
+      color: white;
+      min-height: 100vh;
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      position: relative;
+    }
+    
+    .cyber-border {
+      position: absolute;
+      pointer-events: none;
+      border: 2px solid var(--neon);
+      box-shadow: 0 0 15px var(--neon), inset 0 0 15px var(--neon);
+      border-radius: 8px;
+    }
+    
+    #cyber-border-top {
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      width: 100%;
+    }
+    
+    #cyber-border-right {
+      top: 0;
+      right: 0;
+      bottom: 0;
+      width: 4px;
+    }
+    
+    #cyber-border-bottom {
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+    
+    #cyber-border-left {
+      top: 0;
+      left: 0;
+      bottom: 0;
+      width: 4px;
+    }
+    
+    .cyber-corner {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      border: 3px solid var(--neon);
+      box-shadow: 0 0 10px var(--neon);
+      pointer-events: none;
+    }
+    
+    #corner-tl {
+      top: 0;
+      left: 0;
+      border-right: none;
+      border-bottom: none;
+      border-radius: 8px 0 0 0;
+    }
+    
+    #corner-tr {
+      top: 0;
+      right: 0;
+      border-left: none;
+      border-bottom: none;
+      border-radius: 0 8px 0 0;
+    }
+    
+    #corner-br {
+      bottom: 0;
+      right: 0;
+      border-left: none;
+      border-top: none;
+      border-radius: 0 0 8px 0;
+    }
+    
+    #corner-bl {
+      bottom: 0;
+      left: 0;
+      border-right: none;
+      border-top: none;
+      border-radius: 0 0 0 8px;
+    }
+    
+    .grid-pattern {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        linear-gradient(rgba(110, 69, 226, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(110, 69, 226, 0.1) 1px, transparent 1px);
+      background-size: 30px 30px;
+      z-index: -2;
+      opacity: 0.5;
+    }
+    
+    .cyber-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, var(--neon), transparent);
+      z-index: 1000;
+      animation: scanline 2s linear infinite;
+      display: none;
+    }
+    
+    @keyframes scanline {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+    
+    .main-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+      position: relative;
+    }
+    
+    .cyber-header {
+      text-align: center;
+      margin-bottom: 2rem;
+      position: relative;
+      padding: 1rem 0;
+    }
+    
+    .cyber-header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2.5rem;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 10px rgba(110, 69, 226, 0.5);
+      letter-spacing: 2px;
+      margin: 0;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .cyber-header h1::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: linear-gradient(90deg, var(--primary), var(--accent));
+      border-radius: 3px;
+    }
+    
+    .dashboard-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .cyber-card {
+      background: rgba(15, 15, 26, 0.7);
+      border: 1px solid rgba(110, 69, 226, 0.3);
+      border-radius: 8px;
+      padding: 1.5rem;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cyber-card::before {
+      content: '';
+      position: absolute;
+      top: -2px;
+      left: -2px;
+      right: -2px;
+      bottom: -2px;
+      background: linear-gradient(45deg, var(--primary), var(--accent), var(--secondary));
+      z-index: -1;
+      border-radius: 10px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .cyber-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+    }
+    
+    .cyber-card:hover::before {
+      opacity: 0.3;
+    }
+    
+    .cyber-card h2 {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.3rem;
+      color: var(--secondary);
+      margin-top: 0;
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .period-display {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.1rem;
+      background: rgba(136, 211, 206, 0.1);
+      padding: 0.8rem;
+      border-radius: 6px;
+      border-left: 3px solid var(--accent);
+      margin-bottom: 1rem;
+    }
+    
+    .timer-display {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.8rem;
+      color: var(--neon);
+      text-shadow: 0 0 10px var(--neon);
+      text-align: center;
+      margin: 1rem 0;
+    }
+    
+    .prediction-result {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      text-align: center;
+      margin: 1.5rem 0;
+      padding: 1rem;
+      border-radius: 8px;
+      background: rgba(255, 126, 95, 0.1);
+      position: relative;
+    }
+    
+    .prediction-result::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 1px solid var(--accent);
+      border-radius: 8px;
+      pointer-events: none;
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.3; }
+      50% { opacity: 0.7; }
+      100% { opacity: 0.3; }
+    }
+    
+    .confidence-meter {
+      height: 8px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 4px;
+      margin: 1rem 0;
+      overflow: hidden;
+    }
+    
+    .confidence-level {
+      height: 100%;
+      background: linear-gradient(90deg, #ff5e62, #ff9966);
+      border-radius: 4px;
+      width: 0;
+      transition: width 1s ease;
+    }
+    
+    .history-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .history-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem;
+      margin-bottom: 0.5rem;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 6px;
+      transition: all 0.3s ease;
+    }
+    
+    .history-item:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateX(5px);
+    }
+    
+    .history-item.win {
+      border-left: 3px solid var(--win);
+    }
+    
+    .history-item.loss {
+      border-left: 3px solid var(--loss);
+    }
+    
+    .cyber-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      border: none;
+      padding: 0.8rem 1.5rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(110, 69, 226, 0.4);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .cyber-button::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .cyber-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(110, 69, 226, 0.6);
+    }
+    
+    .cyber-button:hover::before {
+      left: 100%;
+    }
+    
+    .button-group {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 2rem;
+    }
+    
+    .status-indicator {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-right: 0.5rem;
+      animation: pulse 2s infinite;
+    }
+    
+    .online {
+      background: var(--win);
+      box-shadow: 0 0 10px var(--win);
+    }
+    
+    .offline {
+      background: var(--loss);
+      box-shadow: 0 0 10px var(--loss);
+    }
+    
+    .cyber-footer {
+      text-align: center;
+      margin-top: 3rem;
+      padding: 1rem;
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.6);
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .stats-container {
+      display: flex;
+      justify-content: space-around;
+      margin: 1rem 0;
+      padding: 1rem;
+      background: rgba(15, 15, 26, 0.5);
+      border-radius: 8px;
+    }
+    
+    .stat-box {
+      text-align: center;
+    }
+    
+    .stat-value {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 1.5rem;
+      margin: 0.5rem 0;
+    }
+    
+    .win-stat {
+      color: var(--win);
+    }
+    
+    .loss-stat {
+      color: var(--loss);
+    }
+    
+    .accuracy-stat {
+      color: var(--neon);
+    }
+    
+    .glitch-effect {
+      position: relative;
+    }
+    
+    .glitch-effect::before, .glitch-effect::after {
+      content: attr(data-text);
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0.8;
+    }
+    
+    .glitch-effect::before {
+      color: #0ff;
+      z-index: -1;
+      animation: glitch 3s infinite;
+    }
+    
+    .glitch-effect::after {
+      color: #f0f;
+      z-index: -2;
+      animation: glitch 2s infinite reverse;
+    }
+    
+    @keyframes glitch {
+      0% { transform: translate(0); }
+      20% { transform: translate(-3px, 3px); }
+      40% { transform: translate(-3px, -3px); }
+      60% { transform: translate(3px, 3px); }
+      80% { transform: translate(3px, -3px); }
+      100% { transform: translate(0); }
+    }
+    
+    /* Result Dialog Styles */
+    .result-dialog {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(15, 15, 26, 0.95);
+      border: 2px solid var(--neon);
+      box-shadow: 0 0 30px var(--neon);
+      border-radius: 10px;
+      padding: 2rem;
+      text-align: center;
+      z-index: 1000;
+      max-width: 80%;
+      width: 400px;
+      animation: fadeIn 0.5s ease;
+      backdrop-filter: blur(10px);
+    }
+    
+    .result-dialog.win {
+      border-color: var(--win);
+      box-shadow: 0 0 30px var(--win);
+    }
+    
+    .result-dialog.loss {
+      border-color: var(--loss);
+      box-shadow: 0 0 30px var(--loss);
+    }
+    
+    .result-dialog h2 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      margin-top: 0;
+    }
+    
+    .result-dialog.win h2 {
+      color: var(--win);
+      text-shadow: 0 0 15px var(--win);
+    }
+    
+    .result-dialog.loss h2 {
+      color: var(--loss);
+      text-shadow: 0 0 15px var(--loss);
+    }
+    
+    .result-dialog p {
+      font-size: 1.2rem;
+      margin-bottom: 1.5rem;
+    }
+    
+    .result-dialog i {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translate(-50%, -60%); }
+      to { opacity: 1; transform: translate(-50%, -50%); }
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translate(-50%, -50%); }
+      to { opacity: 0; transform: translate(-50%, -40%); }
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+      .cyber-header h1 {
+        font-size: 1.8rem;
+      }
+      
+      .dashboard-grid {
+        grid-template-columns: 1fr;
+      }
+      
+      .button-group {
+        flex-direction: column;
+      }
+      
+      .stats-container {
+        flex-direction: column;
+        gap: 1rem;
+      }
+      
+      .result-dialog {
+        width: 90%;
+        padding: 1.5rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Cyber UI Elements -->
+  <div class="cyber-loader" id="pageLoader"></div>
+  <div class="grid-pattern"></div>
+  
+  <div class="cyber-border" id="cyber-border-top"></div>
+  <div class="cyber-border" id="cyber-border-right"></div>
+  <div class="cyber-border" id="cyber-border-bottom"></div>
+  <div class="cyber-border" id="cyber-border-left"></div>
+  
+  <div class="cyber-corner" id="corner-tl"></div>
+  <div class="cyber-corner" id="corner-tr"></div>
+  <div class="cyber-corner" id="corner-br"></div>
+  <div class="cyber-corner" id="corner-bl"></div>
+
+  <div class="main-container">
+    <header class="cyber-header">
+      <h1 class="glitch-effect" data-text="ANXT AI ULTIMATE">
+        <i class="fas fa-robot"></i> ANXT AI ULTIMATE
+      </h1>
+      <div class="status-indicator online"></div>
+      <span>SYSTEM ONLINE</span>
+    </header>
+
+    <div class="dashboard-grid">
+      <!-- Period & Timer Card -->
+      <div class="cyber-card">
+        <h2><i class="fas fa-clock"></i> CURRENT PERIOD</h2>
+        <div class="period-display">
+          <i class="fas fa-hashtag"></i> <span id="period">LOADING...</span>
+        </div>
+        <div class="timer-display">
+          <i class="fas fa-hourglass-half"></i> <span id="timer">00:00</span>
+        </div>
+        <div class="period-progress">
+          <div class="confidence-meter">
+            <div class="confidence-level" id="periodProgress"></div>
+          </div>
+          <div style="display: flex; justify-content: space-between;">
+            <span>Start</span>
+            <span>End</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Prediction Card -->
+      <div class="cyber-card">
+        <h2><i class="fas fa-crystal-ball"></i> AI PREDICTION</h2>
+        <div class="prediction-result" id="prediction">
+          <!-- Initial prediction will be set immediately -->
+        </div>
+        <div style="text-align: center;">
+          <span>Confidence Level</span>
+          <div class="confidence-meter">
+            <div class="confidence-level" id="confidenceLevel"></div>
+          </div>
+          <span id="chance">CALCULATING...</span>
+        </div>
+        
+        <!-- Win/Loss Stats -->
+        <div class="stats-container">
+          <div class="stat-box">
+            <div>WINS</div>
+            <div class="stat-value win-stat" id="totalWins">0</div>
+          </div>
+          <div class="stat-box">
+            <div>LOSSES</div>
+            <div class="stat-value loss-stat" id="totalLosses">0</div>
+          </div>
+          <div class="stat-box">
+            <div>ACCURACY</div>
+            <div class="stat-value accuracy-stat" id="accuracy">0%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- History Card -->
+      <div class="cyber-card">
+        <h2><i class="fas fa-history"></i> PREDICTION HISTORY</h2>
+        <ul class="history-list" id="historyList">
+          <!-- History items will be added dynamically -->
+        </ul>
+      </div>
+    </div>
+
+    <div class="button-group">
+      <button class="cyber-button" onclick="window.location.reload();">
+        <i class="fas fa-sync-alt"></i> REFRESH DATA
+      </button>
+      <button class="cyber-button" onclick="alert('Premium features unlocked!');">
+        <i class="fas fa-lock-open"></i> PREMIUM ACCESS
+      </button>
+    </div>
+
+    <footer class="cyber-footer">
+      <p>© 2023 ANXT AI ULTIMATE | POWERED BY QUANTUM PREDICTION ENGINE</p>
+      <p>v3.1.0 | SYSTEM OPTIMAL</p>
+    </footer>
+  </div>
+
+  <!-- Result Dialog (hidden by default) -->
+  <div id="resultDialog" class="result-dialog" style="display: none;">
+    <i id="resultIcon"></i>
+    <h2 id="resultTitle"></h2>
+    <p id="resultMessage"></p>
+  </div>
+
+  <!-- Deferred JavaScript -->
+  <script>
+    // Show loader
+    document.getElementById('pageLoader').style.display = 'block';
+    
+    // Game state variables
+    let gameHistory = [];
+    let totalWins = 0;
+    let totalLosses = 0;
+    let currentPrediction = null;
+    let lastResult = null;
+    let lastPeriod = null;
+    
+    // Prediction sequence - only BIG and SMALL
+    const predictionSequence = ["BIG", "SMALL"];
+    
+    // Initialize with a prediction immediately
+    function initializePrediction() {
+      const prediction = predictionSequence[Math.floor(Math.random() * predictionSequence.length)];
+      const randomChance = Math.floor(Math.random() * (95 - 65 + 1)) + 65;
+      
+      currentPrediction = prediction;
+      
+      document.getElementById("prediction").textContent = prediction;
+      document.getElementById("confidenceLevel").style.width = `${randomChance}%`;
+      document.getElementById("chance").textContent = `AI CONFIDENCE: ${randomChance}%`;
+    }
+    
+    // Hide loader when page is loaded
+    window.addEventListener('load', function() {
+      setTimeout(function() {
+        document.getElementById('pageLoader').style.display = 'none';
+      }, 1000);
+      
+      // Check internet connection
+      checkInternet();
+      
+      // Initialize with empty history and first prediction
+      updateStats();
+      initializePrediction();
+    });
+    
+    // Internet connection check
+    function checkInternet() {
+      if (!navigator.onLine) {
+        document.querySelector('.status-indicator').className = 'status-indicator offline';
+        document.querySelector('.status-indicator').nextElementSibling.textContent = 'SYSTEM OFFLINE';
+        alert('Connection lost! Please check your internet connection.');
+        setTimeout(function() { window.location.reload(); }, 5000);
+      }
+    }
+    
+    window.addEventListener('offline', checkInternet);
+    
+    // Show result dialog
+    function showResultDialog(isWin) {
+      const dialog = document.getElementById('resultDialog');
+      const icon = document.getElementById('resultIcon');
+      const title = document.getElementById('resultTitle');
+      const message = document.getElementById('resultMessage');
+      
+      if (isWin) {
+        dialog.className = 'result-dialog win';
+        icon.className = 'fas fa-trophy';
+        title.textContent = 'WINNER!';
+        message.textContent = 'Congratulations! 🎉🎉🎉';
+      } else {
+        dialog.className = 'result-dialog loss';
+        icon.className = 'fas fa-sad-tear';
+        title.textContent = 'LOSS';
+        message.textContent = 'Sorry for the loss. Better luck next time!';
+      }
+      
+      dialog.style.display = 'block';
+      
+      // Hide after 5 seconds
+      setTimeout(() => {
+        dialog.style.animation = 'fadeOut 0.5s ease';
+        setTimeout(() => {
+          dialog.style.display = 'none';
+          dialog.style.animation = 'fadeIn 0.5s ease';
+        }, 500);
+      }, 5000);
+    }
+    
+    // Period and timer functionality
+    function updatePeriodAndTimer() {
+      const now = new Date();
+      const seconds = now.getUTCSeconds();
+      const remainingSeconds = 60 - seconds;
+      const totalMinutes = now.getUTCHours() * 60 + now.getUTCMinutes();
+      
+      const periodNumber = `${now.getUTCFullYear()}${(now.getUTCMonth() + 1).toString().padStart(2, '0')}${now.getUTCDate().toString().padStart(2, '0')}1000${(10001 + totalMinutes)}`;
+      document.getElementById("period").textContent = periodNumber;
+      document.getElementById("timer").textContent = `00:${remainingSeconds.toString().padStart(2, '0')}`;
+      
+      // Update progress bar
+      const progressPercent = (seconds / 60) * 100;
+      document.getElementById("periodProgress").style.width = `${progressPercent}%`;
+      
+      if (lastPeriod !== periodNumber) {
+        lastPeriod = periodNumber;
+        // Immediately show new prediction without "ANALYZING" state
+        generatePrediction(periodNumber);
+        
+        // After prediction, simulate result after some time
+        setTimeout(() => {
+          determineResult(periodNumber);
+        }, 15000);
+      }
+    }
+    
+    function generatePrediction(periodNumber) {
+      const prediction = predictionSequence[Math.floor(Math.random() * predictionSequence.length)];
+      const randomChance = Math.floor(Math.random() * (95 - 65 + 1)) + 65;
+      
+      currentPrediction = prediction;
+      
+      document.getElementById("prediction").textContent = prediction;
+      document.getElementById("confidenceLevel").style.width = `${randomChance}%`;
+      document.getElementById("chance").textContent = `AI CONFIDENCE: ${randomChance}%`;
+    }
+    
+    function determineResult(periodNumber) {
+      // In a real app, this would come from an API
+      // For demo, we'll randomly determine if the prediction was correct
+      const actualResult = Math.random() > 0.5 ? "BIG" : "SMALL";
+      const isWin = currentPrediction === actualResult;
+      const chance = parseInt(document.getElementById("confidenceLevel").style.width);
+      
+      addToHistory(currentPrediction, chance, isWin);
+      updateStats();
+      
+      // Update the prediction display with the result
+      const predictionElement = document.getElementById("prediction");
+      predictionElement.textContent = `${currentPrediction} (${isWin ? 'WIN' : 'LOSS'})`;
+      predictionElement.style.color = isWin ? 'var(--win)' : 'var(--loss)';
+      
+      // Show result dialog
+      showResultDialog(isWin);
+      
+      // Reset for next round
+      currentPrediction = null;
+    }
+    
+    function addToHistory(prediction, chance, isWin) {
+      const historyItem = {
+        prediction,
+        chance,
+        isWin,
+        timestamp: new Date().toLocaleTimeString()
+      };
+      
+      gameHistory.unshift(historyItem);
+      if (gameHistory.length > 10) gameHistory.pop();
+      
+      updateHistoryDisplay();
+    }
+    
+    function updateHistoryDisplay() {
+      const historyList = document.getElementById("historyList");
+      historyList.innerHTML = '';
+      
+      gameHistory.forEach(item => {
+        const li = document.createElement('li');
+        li.className = `history-item ${item.isWin ? 'win' : 'loss'}`;
+        li.innerHTML = `
+          <span>
+            <i class="fas ${item.isWin ? 'fa-check-circle' : 'fa-times-circle'}" 
+               style="color: ${item.isWin ? 'var(--win)' : 'var(--loss)'};"></i> 
+            ${item.prediction} (${item.chance}%)
+          </span>
+          <span>${item.timestamp}</span>
+        `;
+        historyList.appendChild(li);
+      });
+    }
+    
+    function updateStats() {
+      totalWins = gameHistory.filter(item => item.isWin).length;
+      totalLosses = gameHistory.filter(item => !item.isWin).length;
+      const totalGames = totalWins + totalLosses;
+      const accuracy = totalGames > 0 ? Math.round((totalWins / totalGames) * 100) : 0;
+      
+      document.getElementById("totalWins").textContent = totalWins;
+      document.getElementById("totalLosses").textContent = totalLosses;
+      document.getElementById("accuracy").textContent = `${accuracy}%`;
+    }
+    
+    // Start the timer
+    setInterval(updatePeriodAndTimer, 1000);
+    updatePeriodAndTimer(); // Initial call
+    
+    // Simulate API fetch for game results (demo only)
+    async function fetchGameResult() {
+      // In a real implementation, this would fetch from an actual API
+      return new Promise(resolve => {
+        setTimeout(() => {
+          resolve({
+            period: lastPeriod,
+            result: Math.floor(Math.random() * 10) // 0-9 for demo
+          });
+        }, 1000);
+      });
+    }
+  </script>
+</body>
+</html>
